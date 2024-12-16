@@ -866,7 +866,10 @@ int aml_run(struct aml* self)
 	self->do_exit = false;
 
 	do {
-		aml_poll(self, -1);
+		int ret = aml_poll(self, -1);
+		if (ret < 0) {
+			return ret;
+		}
 		aml_dispatch(self);
 	} while (!self->do_exit);
 
